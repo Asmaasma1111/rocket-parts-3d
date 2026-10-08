@@ -1,0 +1,80 @@
+export const SYSTEMS = {
+  structure:  { ar: 'النظام الهيكلي',        en: 'Structure System',          color: '#ff6b6b' },
+  payload:    { ar: 'نظام الحمولة',          en: 'Payload System',            color: '#ffc857' },
+  guidance:   { ar: 'نظام التوجيه والتحكم',  en: 'Guidance and Control',      color: '#4ade80' },
+  propulsion: { ar: 'نظام الدفع',            en: 'Propulsion System',         color: '#4da3ff' },
+  staging:    { ar: 'نظام المراحل',          en: 'Staging System',            color: '#b388ff' },
+};
+
+// where: 'external' | 'internal' | 'both'
+export const PARTS = [
+  // Structure
+  { id: 'nose-cone', system: 'structure', where: 'external',
+    en: 'Nose Cone', ar: 'المخروط الأنفي',
+    role: 'الجزء المدبّب في قمة الصاروخ، يشق الهواء ويقلل مقاومته أثناء الصعود.' },
+  { id: 'airframe', system: 'structure', where: 'both',
+    en: 'Airframe (Body and Frame)', ar: 'هيكل الصاروخ (الجسم والإطار)',
+    role: 'الجسم الخارجي وإطاره الداخلي، يحملان جميع الأجزاء ويتحملان قوى الضغط والاهتزاز أثناء الطيران.' },
+  { id: 'fins', system: 'structure', where: 'external',
+    en: 'Fins', ar: 'الزعانف',
+    role: 'أسطح صغيرة في قاعدة الصاروخ تحافظ على استقراره واتجاهه أثناء طيرانه في الغلاف الجوي.' },
+  { id: 'interstage', system: 'structure', where: 'external',
+    en: 'Interstage', ar: 'الوصلة بين المرحلتين',
+    role: 'حلقة تربط المرحلتين وتحيط بمحرك المرحلة الثانية، وعندها يحدث الانفصال في الوقت المحدد.' },
+
+  // Payload
+  { id: 'payload-fairing', system: 'payload', where: 'external',
+    en: 'Payload Fairing', ar: 'غطاء الحمولة الانسيابي',
+    role: 'يغطي الحمولة ويحميها من الحرارة وضغط الهواء أثناء عبور الغلاف الجوي، ثم ينفصل إلى نصفين ليخفّ وزن الصاروخ.' },
+  { id: 'payload', system: 'payload', where: 'internal',
+    en: 'Payload', ar: 'الحمولة',
+    role: 'ما يحمله الصاروخ إلى الفضاء، مثل قمر اصطناعي أو مسبار أو كبسولة روّاد، وهي سبب الرحلة كلها.' },
+
+  // Guidance and control
+  { id: 'guidance', system: 'guidance', where: 'internal',
+    en: 'Guidance and Control System', ar: 'نظام التوجيه والتحكم',
+    role: 'دماغ الصاروخ؛ حواسيب ومستشعرات تحدد موقعه وسرعته وتصدر الأوامر لتعديل مساره.' },
+  { id: 'electrical-comms', system: 'guidance', where: 'internal',
+    en: 'Electrical and Communication Systems', ar: 'الأنظمة الكهربائية والاتصالات',
+    role: 'بطاريات وأسلاك وهوائيات تمدّ الصاروخ بالكهرباء وترسل بيانات الرحلة إلى مركز التحكم على الأرض.' },
+  { id: 'gimbal', system: 'guidance', where: 'internal',
+    en: 'Gimbal (Thrust Vector Control)', ar: 'مفصل توجيه الدفع (الجيمبال)',
+    role: 'مفصل يُميل المحرك قليلًا في اتجاهات مختلفة ليوجّه الدفع ويعدّل مسار الصاروخ.' },
+
+  // Propulsion
+  { id: 'side-boosters', system: 'propulsion', where: 'external',
+    en: 'Side Boosters', ar: 'المعززات الجانبية',
+    role: 'صواريخ إضافية بالوقود الصلب تُثبَّت على جانبي الصاروخ، تمنحه دفعًا قويًا عند الإقلاع ثم تنفصل بعد دقائق.' },
+  { id: 'fuel-tank', system: 'propulsion', where: 'internal',
+    en: 'Fuel Tank', ar: 'خزان الوقود',
+    role: 'يخزّن الوقود السائل، مثل الهيدروجين السائل أو الكيروسين، ويشغل مع خزان المؤكسد معظم حجم الصاروخ.' },
+  { id: 'oxidiser-tank', system: 'propulsion', where: 'internal',
+    en: 'Oxidiser Tank', ar: 'خزان المؤكسد',
+    role: 'يخزّن الأكسجين السائل الذي يحتاجه الوقود ليحترق، لأنه لا يوجد هواء في الفضاء.' },
+  { id: 'feed-lines', system: 'propulsion', where: 'internal',
+    en: 'Feed Lines', ar: 'أنابيب التغذية',
+    role: 'أنابيب تنقل الوقود والمؤكسد من الخزانات إلى المضخة ثم إلى المحرك.' },
+  { id: 'turbopump', system: 'propulsion', where: 'internal',
+    en: 'Turbopump', ar: 'المضخة التوربينية',
+    role: 'مضخة فائقة السرعة تدفع الوقود والمؤكسد بضغط عالٍ إلى غرفة الاحتراق.' },
+  { id: 'combustion-chamber', system: 'propulsion', where: 'internal',
+    en: 'Combustion Chamber', ar: 'غرفة الاحتراق',
+    role: 'يختلط فيها الوقود بالمؤكسد ويحترقان، فتتكون غازات شديدة الحرارة والضغط.' },
+  { id: 'nozzle', system: 'propulsion', where: 'external',
+    en: 'Nozzle', ar: 'الفوهة',
+    role: 'قمع على شكل جرس يسرّع الغازات الساخنة ويدفعها إلى الأسفل، فيندفع الصاروخ إلى الأعلى (قانون نيوتن الثالث).' },
+  { id: 'upper-stage-engine', system: 'propulsion', where: 'internal',
+    en: 'Upper-Stage Engine', ar: 'محرك المرحلة الثانية',
+    role: 'محرك أصغر يعمل في الفضاء بعد الانفصال، وقد يُعاد تشغيله لضبط المدار بدقة.' },
+
+  // Staging
+  { id: 'first-stage', system: 'staging', where: 'external',
+    en: 'First Stage', ar: 'المرحلة الأولى',
+    role: 'أكبر أقسام الصاروخ وأقواها، ترفعه عن الأرض في الدقائق الأولى ثم تنفصل عند نفاد وقودها.' },
+  { id: 'second-stage', system: 'staging', where: 'external',
+    en: 'Second Stage (Upper Stage)', ar: 'المرحلة الثانية (العليا)',
+    role: 'تبدأ عملها بعد انفصال المرحلة الأولى، فتكمل الصعود وتوصل الحمولة إلى مدارها.' },
+  { id: 'separation-system', system: 'staging', where: 'internal',
+    en: 'Separation System', ar: 'نظام الفصل',
+    role: 'مسامير متفجرة وآليات تفصل المراحل وغطاء الحمولة في اللحظة المحددة لتخفيف الوزن.' },
+];

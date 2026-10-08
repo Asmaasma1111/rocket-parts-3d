@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>أجزاء الصاروخ · Rocket Parts</title>
+  <meta name="description" content="Rocket Parts: an interactive 3D rocket. Hover over or tap any part to see its name in Arabic and English and what it does.">
+  <meta name="theme-color" content="#05070f">
+  <link rel="icon" type="image/png" href="assets/school-emblem.png">
+  <link rel="apple-touch-icon" href="assets/school-emblem.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="importmap">
+  { "imports": {
+      "three": "./vendor/three/build/three.module.js",
+      "three/addons/": "./vendor/three/examples/jsm/"
+  } }
+  </script>
+  <link rel="modulepreload" href="vendor/three/build/three.module.js">
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <div id="loader" class="loader" role="status">
+    <img class="loader-logo" src="assets/school-logo-light.png" width="640" height="643"
+         alt="شعار مدرسة محمد بن إبراهيم الخضير الثانوية للموهوبين والموهوبات">
+    <div class="progress" aria-hidden="true"><span class="progress-bar"></span></div>
+    <p class="loader-text">جاري التحميل · <span lang="en" dir="ltr">Loading</span></p>
+    <p class="loader-error" hidden>
+      تعذّر تشغيل العرض ثلاثي الأبعاد في هذا المتصفح · <span lang="en" dir="ltr">The 3D view could not start in this browser</span>
+    </p>
+  </div>
+
+  <canvas id="scene" role="img" aria-label="صاروخ ثلاثي الأبعاد · 3D rocket"></canvas>
+
+  <div id="app" class="app" inert>
+    <header class="topbar">
+      <div class="brand">
+        <h1 class="title">
+          <span class="title-ar">أجزاء الصاروخ</span>
+          <span class="title-en" lang="en" dir="ltr">Rocket Parts</span>
+        </h1>
+        <button id="parts-button" class="pill parts-button" type="button" aria-expanded="false" aria-controls="parts-panel">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+          <span class="lbl"><span class="ar">قائمة الأجزاء</span><span class="sep" aria-hidden="true"> · </span><span class="en" lang="en" dir="ltr">Parts</span></span>
+        </button>
+      </div>
+      <img class="logo" src="assets/school-logo-light.png" width="640" height="643"
+           alt="شعار مدرسة محمد بن إبراهيم الخضير الثانوية للموهوبين والموهوبات">
+    </header>
+
+    <nav id="parts-panel" class="panel parts-panel" hidden aria-labelledby="parts-button">
+      <div class="parts-list"></div>
+    </nav>
+
+    <div id="legend" class="legend" hidden></div>
+
+    <aside id="card" class="card" hidden aria-live="polite">
+      <button class="card-close" type="button" hidden aria-label="إغلاق · Close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <p class="chip"><span class="dot" aria-hidden="true"></span><span class="chip-ar"></span><span class="sep" aria-hidden="true"> · </span><span class="chip-en" lang="en" dir="ltr"></span></p>
+      <h2 class="card-ar"></h2>
+      <p class="card-en" lang="en" dir="ltr"></p>
+      <hr class="divider">
+      <p class="card-role"></p>
+      <p class="card-tag"><span class="tag-ar"></span><span class="sep" aria-hidden="true"> · </span><span class="tag-en" lang="en" dir="ltr"></span></p>
+    </aside>
+
+    <div class="bottom">
+      <p id="hint" class="hint"><span class="hint-ar">مرّر المؤشر فوق أي جزء لتعرف اسمه ووظيفته</span><span class="sep" aria-hidden="true"> · </span><span class="hint-en" lang="en" dir="ltr">Hover over any part</span></p>
+
+      <div class="controls">
+        <div class="segmented" role="radiogroup" aria-label="من الخارج أو من الداخل · Outside or inside">
+          <button type="button" role="radio" aria-checked="true" data-view="outside">
+            <span class="lbl"><span class="ar">من الخارج</span><span class="sep" aria-hidden="true"> · </span><span class="en" lang="en" dir="ltr">Outside</span></span>
+          </button>
+          <button type="button" role="radio" aria-checked="false" tabindex="-1" data-view="inside">
+            <span class="lbl"><span class="ar">من الداخل</span><span class="sep" aria-hidden="true"> · </span><span class="en" lang="en" dir="ltr">Inside</span></span>
+          </button>
+        </div>
+        <button id="separate" class="pill" type="button" aria-pressed="false">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v7M8 7l4-4 4 4M12 21v-7M8 17l4 4 4-4"/></svg>
+          <span class="lbl"><span class="ar">فصل المراحل</span><span class="sep" aria-hidden="true"> · </span><span class="en" lang="en" dir="ltr">Separate stages</span></span>
+        </button>
+        <button id="autorotate" class="pill" type="button" aria-pressed="true">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5"/></svg>
+          <span class="lbl"><span class="ar">دوران تلقائي</span><span class="sep" aria-hidden="true"> · </span><span class="en" lang="en" dir="ltr">Auto-rotate</span></span>
+        </button>
+        <button id="reset" class="pill" type="button">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg>
+          <span class="lbl"><span class="ar">إعادة الضبط</span><span class="sep" aria-hidden="true"> · </span><span class="en" lang="en" dir="ltr">Reset view</span></span>
+        </button>
+      </div>
+
+      <footer class="footer">
+        <!-- CREDITS: to be filled in -->
+        <span lang="en" dir="ltr">Content checked against <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/rocket-parts" target="_blank" rel="noopener">NASA Glenn Research Center, Beginner's Guide to Rockets</a></span>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    // Browsers without import maps (very old Safari) cannot run the page.
+    if (!(window.HTMLScriptElement && HTMLScriptElement.supports && HTMLScriptElement.supports('importmap'))) {
+      document.getElementById('loader').classList.add('has-error');
+      document.querySelector('.loader-error').hidden = false;
+    }
+  </script>
+</body>
+</html>
